@@ -31,4 +31,4 @@ if __name__ == '__main__':
     
     print "void (*alphabet[])() = { ",
     print ", ".join("&"+f for f in funcnames),
-    print " }"
+    print " };"
