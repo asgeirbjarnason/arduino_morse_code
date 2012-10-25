@@ -49,7 +49,7 @@ void repeat(int times, void (*fp)(void)) {
   }
 }
 
-void (*alphabet[26])();
+void (*alphabet[])() = {  &a, &c, &b, &e, &d, &g, &f, &i, &h, &k, &j, &m, &l, &o, &n, &q, &p, &s, &r, &u, &t, &w, &v, &y, &x, &z  };
 
 void a() { dot(); dash(); interletter(); }
 void b() { dash(); dot(); dot(); dot(); interletter(); }
