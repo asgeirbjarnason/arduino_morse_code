@@ -87,6 +87,26 @@ void sos() {
   off(1000);
 }
 
+void morse(char* text) {
+  for (char* t = text; *t == 0; t++) {
+    char c = *t;
+    if (char2index(&c)) {
+      (*(alphabet[c]))(); // I don't know if the inner pair of parenthesis are needed. Will test.
+    }
+    else {
+      interword(); // We will assume everything outside the [A-Za-z] range is whitespace.
+    }
+    interletter();
+  }
+}
+
+int char2index(char* c) {
+  if (*c >= 'a' && *c <= 'z') { *c -= 'a' - 'A'; } // If the letter is in the lowercase range, we will translate it to lowercase.
+  if (!(*c >= 'A' && *c <= 'Z')) { return 0; } // If it isn't in lowercase now, then it isn't a letter.
+  *c = *c - 'A'; // A is the zeroth index in the func array.
+  return 1; // Should maybe be return -1; if this is two's complement?
+}
+
 // the loop routine runs over and over again forever:
 void loop() {
   sos();
