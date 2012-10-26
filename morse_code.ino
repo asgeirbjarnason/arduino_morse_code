@@ -49,8 +49,6 @@ void repeat(int times, void (*fp)(void)) {
   }
 }
 
-void (*alphabet[])() = {  &a, &c, &b, &e, &d, &g, &f, &i, &h, &k, &j, &m, &l, &o, &n, &q, &p, &s, &r, &u, &t, &w, &v, &y, &x, &z  };
-
 void a() { dot(); dash(); interletter(); }
 void b() { dash(); dot(); dot(); dot(); interletter(); }
 void c() { dash(); dot(); dash(); dot(); interletter(); }
@@ -78,20 +76,13 @@ void x() { dash(); dot(); dot(); dash(); interletter(); }
 void y() { dash(); dot(); dash(); dash(); interletter(); }
 void z() { dash(); dash(); dot(); dot(); interletter(); }
 
-void sos() {
-  repeat(3, &dot);
-  interletter();
-  repeat(3, &dash);
-  interletter();
-  repeat(3, &dot);
-  off(1000);
-}
+void (*alphabet[])() = {  &a, &b, &c, &d, &e, &f, &g, &h, &i, &j, &k, &l, &m, &n, &o, &p, &q, &r, &s, &t, &u, &v, &w, &x, &y, &z  };
 
 void morse(char* text) {
-  for (char* t = text; *t == 0; t++) {
+  for (char* t = text; *t != 0; t++) {
     char c = *t;
-    if (char2index(&c)) {
-      (*(alphabet[c]))(); // I don't know if the inner pair of parenthesis are needed. Will test.
+    if (char2index(c)) {
+      (*alphabet[c])();
     }
     else {
       interword(); // We will assume everything outside the [A-Za-z] range is whitespace.
@@ -100,14 +91,15 @@ void morse(char* text) {
   }
 }
 
-int char2index(char* c) {
-  if (*c >= 'a' && *c <= 'z') { *c -= 'a' - 'A'; } // If the letter is in the lowercase range, we will translate it to lowercase.
-  if (!(*c >= 'A' && *c <= 'Z')) { return 0; } // If it isn't in lowercase now, then it isn't a letter.
-  *c = *c - 'A'; // A is the zeroth index in the func array.
+int char2index(char& c) {
+  if (c >= 'a' && c <= 'z') { c -= 'a' - 'A'; } // If the letter is in the lowercase range, we will translate it to lowercase.
+  if (!(c >= 'A' && c <= 'Z')) { return 0; } // If it isn't in lowercase now, then it isn't a letter.
+  c -= 'A'; // A is the zeroth index in the func array.
   return 1; // Should maybe be return -1; if this is two's complement?
 }
 
 // the loop routine runs over and over again forever:
 void loop() {
-  sos();
+  char* input = "sos ";
+  morse(input);
 }
