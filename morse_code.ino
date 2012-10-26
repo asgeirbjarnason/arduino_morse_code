@@ -95,7 +95,7 @@ boolean char2index(char& c) {
   if (c >= 'a' && c <= 'z') { c -= 'a' - 'A'; } // If the letter is in the lowercase range, we will translate it to lowercase.
   if (!(c >= 'A' && c <= 'Z')) { return false; } // If it isn't in lowercase now, then it isn't a letter.
   c -= 'A'; // A is the zeroth index in the func array.
-  return true; // Should maybe be return -1; if this is two's complement?
+  return true;
 }
 
 // the loop routine runs over and over again forever:
