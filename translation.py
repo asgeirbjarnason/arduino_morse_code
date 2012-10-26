@@ -30,5 +30,5 @@ if __name__ == '__main__':
     print # Empty line to seperate the function from the function pointer array.
     
     print "void (*alphabet[])() = { ",
-    print ", ".join("&"+f for f in funcnames),
+    print ", ".join("&"+f for f in sorted(funcnames)),
     print " };"
