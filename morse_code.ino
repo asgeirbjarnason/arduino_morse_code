@@ -8,9 +8,11 @@ const int INTRALETTER_WAITTIME = DOT_TIME;
 const int INTERLETTER_WAITTIME = DOT_TIME * 2; // We will already have waited one DOT_TIME, because of the INTRALETTER_WAITTIME
 const int INTERWORD_WAITTIME = DOT_TIME * 4; // See above for why this is not DOT_TIME * 7
 
+char morse_text[] = "sos ";
+char* morse_curr_pos = morse_text;
 
 // the setup routine runs once when you press reset:
-void setup() {                
+void setup() {
   // initialize the digital pin as an output.
   pinMode(led, OUTPUT);     
 }
@@ -27,27 +29,48 @@ void cycle(int ontime, int offtime) {
   delay(offtime);
 }
 
-void dot() {
-  cycle(DOT_TIME, INTRALETTER_WAITTIME);
-}
-
-void dash() {
-  cycle(DASH_TIME, INTRALETTER_WAITTIME);
-}
-
-void interletter() {
-  off(INTERLETTER_WAITTIME);
-}
-
-void interword() {
-  off(INTERWORD_WAITTIME);
-}
-
-void repeat(int times, void (*fp)(void)) {
-  for (int i = 0; i < times; i++) {
-    (*fp)();
+boolean dot(unsigned long start, unsigned long current) {
+  if (current - start < DOT_TIME) {
+    digitalWrite(led, HIGH); // I really shouldn't write again and again into the ping. Should make it sticky instead (but that's a problem for another time).
+    return false;
   }
+  if (current - start < DOT_TIME + INTRALETTER_WAITTIME) {
+    digitalWrite(led, LOW);
+    return false;
+  }
+  return true;
 }
+
+boolean dash(unsigned long start, unsigned long current) {
+  if (current - start < DASH_TIME) {
+    digitalWrite(led, HIGH); // I really shouldn't write again and again into the ping. Should make it sticky instead (but that's a problem for another time).
+    return false;
+  }
+  if (current - start < DASH_TIME + INTRALETTER_WAITTIME) {
+    digitalWrite(led, LOW);
+    return false;
+  }
+  return true;
+}
+
+boolean interletter(unsigned long start, unsigned long current) {
+  if (current - start < INTERLETTER_WAITTIME) {
+    digitalWrite(led, LOW);
+    return false;
+  }
+  return true;
+}
+
+boolean interword(unsigned long start, unsigned long current) {
+  if (current - start < INTERWORD_WAITTIME) {
+    digitalWrite(led, LOW);
+    return false;
+  }
+  return true;
+}
+
+boolean (*tokens[5])(unsigned long, unsigned long);
+int token_count = 0;
 
 // --autogen--
 void morse_a() { token_count = 0; tokens[token_count++] = &dot; tokens[token_count++] = &dash; tokens[token_count++] = &interletter;};
@@ -81,18 +104,7 @@ void morse_z() { token_count = 0; tokens[token_count++] = &dash; tokens[token_co
 void (*alphabet[])() = { &morse_a, &morse_b, &morse_c, &morse_d, &morse_e, &morse_f, &morse_g, &morse_h, &morse_i, &morse_j, &morse_k, &morse_l, &morse_m, &morse_n, &morse_o, &morse_p, &morse_q, &morse_r, &morse_s, &morse_t, &morse_u, &morse_v, &morse_w, &morse_x, &morse_y, &morse_z };
 // --autogen--
 
-void morse(char* text) {
-  for (char* t = text; *t != 0; t++) {
-    char c = *t;
-    if (char2index(c)) {
-      (*alphabet[c])();
-    }
-    else {
-      interword(); // We will assume everything outside the [A-Za-z] range is whitespace.
-    }
-    interletter();
-  }
-}
+void morse_interword() { token_count = 0; tokens[token_count++] = &interword; };
 
 boolean char2index(char& c) {
   if (c >= 'a' && c <= 'z') { c -= 'a' - 'A'; } // If the letter is in the lowercase range, we will translate it to lowercase.
@@ -101,10 +113,47 @@ boolean char2index(char& c) {
   return true;
 }
 
+void morse_state_step() {
+  if (*morse_curr_pos != 0) {
+    char c = *morse_curr_pos;
+    if (char2index(c)) {
+      ((*alphabet[c]))();
+    }
+    else {
+      morse_interword();
+    }
+    ++morse_curr_pos;
+  }
+  else {
+    morse_curr_pos = morse_text;
+    morse_interword();
+  }
+}
+
+void morse_step() {
+  static unsigned long last_start = 0;
+  static int current_token = 0;
+  
+  if (!last_start) { last_start = millis(); }
+  
+  unsigned long now = millis();
+  
+  if (current_token < token_count) {
+    if ((*tokens[current_token])(last_start, now)) {
+      last_start = millis();
+      ++current_token;
+    }
+  }
+  else {
+    morse_state_step();
+    current_token = 0;
+  }
+}
+
 // the loop routine runs over and over again forever:
 void loop() {
-  char* input = "sos ";
-  morse(input);
+  delay(30);
+  morse_step();
 }
 
 
