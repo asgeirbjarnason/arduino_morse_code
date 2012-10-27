@@ -50,34 +50,35 @@ void repeat(int times, void (*fp)(void)) {
 }
 
 // --autogen--
-void a() { dot(); dash(); interletter(); }
-void b() { dash(); dot(); dot(); dot(); interletter(); }
-void c() { dash(); dot(); dash(); dot(); interletter(); }
-void d() { dash(); dot(); dot(); interletter(); }
-void e() { dot(); interletter(); }
-void f() { dot(); dot(); dash(); dot(); interletter(); }
-void g() { dash(); dash(); dot(); interletter(); }
-void h() { dot(); dot(); dot(); dot(); interletter(); }
-void i() { dot(); dot(); interletter(); }
-void j() { dot(); dash(); dash(); dash(); interletter(); }
-void k() { dash(); dot(); dash(); interletter(); }
-void l() { dot(); dash(); dot(); dot(); interletter(); }
-void m() { dash(); dash(); interletter(); }
-void n() { dash(); dot(); interletter(); }
-void o() { dash(); dash(); dash(); interletter(); }
-void p() { dot(); dash(); dash(); dot(); interletter(); }
-void q() { dash(); dash(); dot(); dash(); interletter(); }
-void r() { dot(); dash(); dot(); interletter(); }
-void s() { dot(); dot(); dot(); interletter(); }
-void t() { dash(); interletter(); }
-void u() { dot(); dot(); dash(); interletter(); }
-void v() { dot(); dot(); dot(); dash(); interletter(); }
-void w() { dot(); dash(); dash(); interletter(); }
-void x() { dash(); dot(); dot(); dash(); interletter(); }
-void y() { dash(); dot(); dash(); dash(); interletter(); }
-void z() { dash(); dash(); dot(); dot(); interletter(); }
+void morse_a() { token_count = 0; tokens[token_count++] = &dot; tokens[token_count++] = &dash; tokens[token_count++] = &interletter;};
+void morse_b() { token_count = 0; tokens[token_count++] = &dash; tokens[token_count++] = &dot; tokens[token_count++] = &dot; tokens[token_count++] = &dot; tokens[token_count++] = &interletter;};
+void morse_c() { token_count = 0; tokens[token_count++] = &dash; tokens[token_count++] = &dot; tokens[token_count++] = &dash; tokens[token_count++] = &dot; tokens[token_count++] = &interletter;};
+void morse_d() { token_count = 0; tokens[token_count++] = &dash; tokens[token_count++] = &dot; tokens[token_count++] = &dot; tokens[token_count++] = &interletter;};
+void morse_e() { token_count = 0; tokens[token_count++] = &dot; tokens[token_count++] = &interletter;};
+void morse_f() { token_count = 0; tokens[token_count++] = &dot; tokens[token_count++] = &dot; tokens[token_count++] = &dash; tokens[token_count++] = &dot; tokens[token_count++] = &interletter;};
+void morse_g() { token_count = 0; tokens[token_count++] = &dash; tokens[token_count++] = &dash; tokens[token_count++] = &dot; tokens[token_count++] = &interletter;};
+void morse_h() { token_count = 0; tokens[token_count++] = &dot; tokens[token_count++] = &dot; tokens[token_count++] = &dot; tokens[token_count++] = &dot; tokens[token_count++] = &interletter;};
+void morse_i() { token_count = 0; tokens[token_count++] = &dot; tokens[token_count++] = &dot; tokens[token_count++] = &interletter;};
+void morse_j() { token_count = 0; tokens[token_count++] = &dot; tokens[token_count++] = &dash; tokens[token_count++] = &dash; tokens[token_count++] = &dash; tokens[token_count++] = &interletter;};
+void morse_k() { token_count = 0; tokens[token_count++] = &dash; tokens[token_count++] = &dot; tokens[token_count++] = &dash; tokens[token_count++] = &interletter;};
+void morse_l() { token_count = 0; tokens[token_count++] = &dot; tokens[token_count++] = &dash; tokens[token_count++] = &dot; tokens[token_count++] = &dot; tokens[token_count++] = &interletter;};
+void morse_m() { token_count = 0; tokens[token_count++] = &dash; tokens[token_count++] = &dash; tokens[token_count++] = &interletter;};
+void morse_n() { token_count = 0; tokens[token_count++] = &dash; tokens[token_count++] = &dot; tokens[token_count++] = &interletter;};
+void morse_o() { token_count = 0; tokens[token_count++] = &dash; tokens[token_count++] = &dash; tokens[token_count++] = &dash; tokens[token_count++] = &interletter;};
+void morse_p() { token_count = 0; tokens[token_count++] = &dot; tokens[token_count++] = &dash; tokens[token_count++] = &dash; tokens[token_count++] = &dot; tokens[token_count++] = &interletter;};
+void morse_q() { token_count = 0; tokens[token_count++] = &dash; tokens[token_count++] = &dash; tokens[token_count++] = &dot; tokens[token_count++] = &dash; tokens[token_count++] = &interletter;};
+void morse_r() { token_count = 0; tokens[token_count++] = &dot; tokens[token_count++] = &dash; tokens[token_count++] = &dot; tokens[token_count++] = &interletter;};
+void morse_s() { token_count = 0; tokens[token_count++] = &dot; tokens[token_count++] = &dot; tokens[token_count++] = &dot; tokens[token_count++] = &interletter;};
+void morse_t() { token_count = 0; tokens[token_count++] = &dash; tokens[token_count++] = &interletter;};
+void morse_u() { token_count = 0; tokens[token_count++] = &dot; tokens[token_count++] = &dot; tokens[token_count++] = &dash; tokens[token_count++] = &interletter;};
+void morse_v() { token_count = 0; tokens[token_count++] = &dot; tokens[token_count++] = &dot; tokens[token_count++] = &dot; tokens[token_count++] = &dash; tokens[token_count++] = &interletter;};
+void morse_w() { token_count = 0; tokens[token_count++] = &dot; tokens[token_count++] = &dash; tokens[token_count++] = &dash; tokens[token_count++] = &interletter;};
+void morse_x() { token_count = 0; tokens[token_count++] = &dash; tokens[token_count++] = &dot; tokens[token_count++] = &dot; tokens[token_count++] = &dash; tokens[token_count++] = &interletter;};
+void morse_y() { token_count = 0; tokens[token_count++] = &dash; tokens[token_count++] = &dot; tokens[token_count++] = &dash; tokens[token_count++] = &dash; tokens[token_count++] = &interletter;};
+void morse_z() { token_count = 0; tokens[token_count++] = &dash; tokens[token_count++] = &dash; tokens[token_count++] = &dot; tokens[token_count++] = &dot; tokens[token_count++] = &interletter;};
 
-void (*alphabet[])() = {  &a, &b, &c, &d, &e, &f, &g, &h, &i, &j, &k, &l, &m, &n, &o, &p, &q, &r, &s, &t, &u, &v, &w, &x, &y, &z  };
+
+void (*alphabet[])() = { &morse_a, &morse_b, &morse_c, &morse_d, &morse_e, &morse_f, &morse_g, &morse_h, &morse_i, &morse_j, &morse_k, &morse_l, &morse_m, &morse_n, &morse_o, &morse_p, &morse_q, &morse_r, &morse_s, &morse_t, &morse_u, &morse_v, &morse_w, &morse_x, &morse_y, &morse_z };
 // --autogen--
 
 void morse(char* text) {
@@ -105,3 +106,5 @@ void loop() {
   char* input = "sos ";
   morse(input);
 }
+
+
