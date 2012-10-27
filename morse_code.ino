@@ -49,6 +49,7 @@ void repeat(int times, void (*fp)(void)) {
   }
 }
 
+// --autogen--
 void a() { dot(); dash(); interletter(); }
 void b() { dash(); dot(); dot(); dot(); interletter(); }
 void c() { dash(); dot(); dash(); dot(); interletter(); }
@@ -77,6 +78,7 @@ void y() { dash(); dot(); dash(); dash(); interletter(); }
 void z() { dash(); dash(); dot(); dot(); interletter(); }
 
 void (*alphabet[])() = {  &a, &b, &c, &d, &e, &f, &g, &h, &i, &j, &k, &l, &m, &n, &o, &p, &q, &r, &s, &t, &u, &v, &w, &x, &y, &z  };
+// --autogen--
 
 void morse(char* text) {
   for (char* t = text; *t != 0; t++) {
